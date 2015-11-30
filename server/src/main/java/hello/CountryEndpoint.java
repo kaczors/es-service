@@ -1,5 +1,6 @@
 package hello;
 
+import io.spring.guides.gs_producing_web_service.Country;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
@@ -24,7 +25,11 @@ public class CountryEndpoint {
 	@ResponsePayload
 	public GetCountryResponse getCountry(@RequestPayload GetCountryRequest request) {
 		GetCountryResponse response = new GetCountryResponse();
-		response.setCountry(countryRepository.findCountry(request.getName()));
+
+        Country country = countryRepository.findCountry(request.getName());
+        country.setFlag("White & red");
+
+        response.setCountry(country);
 
 		return response;
 	}
